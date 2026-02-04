@@ -1,0 +1,4 @@
+.env
+review_state.sqlite3
+__pycache__/
+.venv/

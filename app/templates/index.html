@@ -3,26 +3,28 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Review Manager | Reputation & Review Platform</title>
+    <title>Northwind Reviews | Multi-Location Review Management</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
         color-scheme: light;
-        font-family: "Inter", system-ui, sans-serif;
+        font-family: "Manrope", system-ui, sans-serif;
         --ink: #0b1220;
-        --muted: #4b5563;
-        --accent: #0f62fe;
-        --accent-dark: #0043ce;
-        --card: #ffffff;
-        --bg: #f5f7fb;
-        --border: #e5e7eb;
-        --success: #13a36f;
+        --muted: #5b6472;
+        --accent: #2563eb;
+        --accent-dark: #1d4ed8;
+        --accent-soft: #e0e7ff;
+        --surface: #ffffff;
+        --surface-alt: #f8fafc;
+        --border: #e2e8f0;
+        --success: #10b981;
         --warning: #f59e0b;
+        --shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
       }
 
       * {
@@ -32,7 +34,7 @@
       }
 
       body {
-        background: var(--bg);
+        background: #f4f6fb;
         color: var(--ink);
       }
 
@@ -41,17 +43,22 @@
         color: inherit;
       }
 
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
       header {
         position: sticky;
         top: 0;
-        background: rgba(255, 255, 255, 0.92);
-        backdrop-filter: blur(12px);
+        backdrop-filter: blur(14px);
+        background: rgba(244, 246, 251, 0.9);
         border-bottom: 1px solid var(--border);
-        z-index: 10;
+        z-index: 20;
       }
 
       .container {
-        width: min(1120px, 92vw);
+        width: min(1200px, 92vw);
         margin: 0 auto;
       }
 
@@ -60,26 +67,43 @@
         align-items: center;
         justify-content: space-between;
         padding: 20px 0;
+        gap: 24px;
+      }
+
+      .logo {
+        font-weight: 800;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo span {
+        display: inline-flex;
+        height: 34px;
+        width: 34px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #2563eb, #60a5fa);
       }
 
       .nav-links {
         display: flex;
-        gap: 24px;
-        font-weight: 500;
+        gap: 22px;
+        font-weight: 600;
         color: var(--muted);
       }
 
       .nav-cta {
         display: flex;
-        gap: 12px;
         align-items: center;
+        gap: 12px;
       }
 
       .button {
         border-radius: 999px;
         padding: 12px 20px;
-        font-weight: 600;
-        font-size: 14px;
+        font-weight: 700;
+        font-size: 0.9rem;
         border: 1px solid transparent;
         display: inline-flex;
         align-items: center;
@@ -98,60 +122,70 @@
 
       .button.ghost {
         border-color: var(--border);
-        background: #fff;
+        background: var(--surface);
         color: var(--ink);
       }
 
       .hero {
-        padding: 70px 0 40px;
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 32px;
+        gap: 36px;
         align-items: center;
+        padding: 70px 0 40px;
       }
 
       .hero h1 {
-        font-size: clamp(2.4rem, 3vw, 3.4rem);
-        line-height: 1.1;
+        font-size: clamp(2.6rem, 3vw, 3.5rem);
+        line-height: 1.05;
         margin-bottom: 16px;
       }
 
       .hero p {
-        font-size: 1rem;
         color: var(--muted);
-        line-height: 1.6;
-        margin-bottom: 24px;
+        line-height: 1.7;
+        margin-bottom: 20px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        background: var(--accent-soft);
+        color: var(--accent-dark);
+        padding: 6px 12px;
+        border-radius: 999px;
+        margin-bottom: 16px;
       }
 
       .hero-card {
-        background: var(--card);
-        border-radius: 24px;
+        background: var(--surface);
+        border-radius: 28px;
         padding: 28px;
-        box-shadow: 0 25px 50px rgba(15, 23, 42, 0.08);
+        box-shadow: var(--shadow);
         border: 1px solid var(--border);
-      }
-
-      .metrics {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
         gap: 18px;
-        margin-top: 24px;
       }
 
-      .metric {
-        background: #f8fafc;
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px;
+      }
+
+      .stat {
+        background: var(--surface-alt);
         border-radius: 16px;
-        padding: 16px;
+        padding: 14px 16px;
       }
 
-      .metric h3 {
-        font-size: 1.4rem;
+      .stat h3 {
+        font-size: 1.3rem;
         margin-bottom: 4px;
-      }
-
-      .metric p {
-        font-size: 0.85rem;
-        color: var(--muted);
       }
 
       .section {
@@ -164,14 +198,14 @@
       }
 
       .section p.lead {
+        max-width: 680px;
         color: var(--muted);
-        max-width: 640px;
-        margin-bottom: 28px;
+        line-height: 1.7;
       }
 
       .grid {
         display: grid;
-        gap: 20px;
+        gap: 18px;
       }
 
       .grid.three {
@@ -179,33 +213,34 @@
       }
 
       .card {
-        background: var(--card);
+        background: var(--surface);
         border-radius: 20px;
         padding: 20px;
         border: 1px solid var(--border);
-        box-shadow: 0 18px 30px rgba(15, 23, 42, 0.05);
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.04);
       }
 
       .card h3 {
+        margin-bottom: 8px;
         font-size: 1.1rem;
-        margin-bottom: 10px;
       }
 
       .pill {
         display: inline-flex;
-        gap: 6px;
         align-items: center;
+        gap: 8px;
         font-size: 0.75rem;
-        background: #e0f2fe;
-        color: #0369a1;
-        padding: 4px 10px;
+        font-weight: 700;
+        padding: 5px 10px;
         border-radius: 999px;
-        font-weight: 600;
+        background: #eef2ff;
+        color: #4338ca;
+        margin-bottom: 10px;
       }
 
-      .reviews-board {
+      .board {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 16px;
         margin-top: 20px;
       }
@@ -214,10 +249,10 @@
         border: 1px solid var(--border);
         border-radius: 18px;
         padding: 18px;
-        background: #fff;
+        background: var(--surface);
       }
 
-      .stars {
+      .review .stars {
         color: #fbbf24;
         margin-bottom: 8px;
       }
@@ -228,71 +263,62 @@
         margin-top: 12px;
       }
 
-      .dashboard {
+      .locations {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .location {
+        padding: 16px;
+        border-radius: 16px;
+        background: var(--surface-alt);
+        border: 1px solid var(--border);
+      }
+
+      .insights {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 16px;
+        margin-top: 24px;
       }
 
-      .chart {
-        height: 120px;
-        background: linear-gradient(120deg, #e0f2fe, #ede9fe);
-        border-radius: 16px;
-        position: relative;
-        overflow: hidden;
+      .insight {
+        padding: 20px;
+        border-radius: 18px;
+        background: linear-gradient(120deg, #eff6ff, #eef2ff);
+        border: 1px solid var(--border);
       }
 
-      .chart::after {
-        content: "";
-        position: absolute;
-        inset: 20px 24px;
-        border: 2px dashed rgba(15, 23, 42, 0.2);
-        border-radius: 12px;
+      .banner {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+        align-items: center;
+        background: #0f172a;
+        color: #fff;
+        padding: 32px;
+        border-radius: 26px;
+      }
+
+      .banner p {
+        color: #cbd5f5;
+        line-height: 1.7;
       }
 
       footer {
-        padding: 40px 0 60px;
+        padding: 50px 0 70px;
         color: var(--muted);
       }
 
       .footer-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-      }
-
-      .banner {
-        background: #0f172a;
-        color: #fff;
-        border-radius: 24px;
-        padding: 28px;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 18px;
-        align-items: center;
       }
 
-      .banner p {
-        color: #cbd5f5;
-        line-height: 1.6;
-      }
-
-      .badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 0.75rem;
-        padding: 6px 10px;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.14);
-      }
-
-      .logo {
-        font-weight: 700;
-        font-size: 1.1rem;
-      }
-
-      @media (max-width: 768px) {
+      @media (max-width: 860px) {
         .nav-links {
           display: none;
         }
@@ -302,17 +328,17 @@
   <body>
     <header>
       <div class="container nav">
-        <div class="logo">Review Manager</div>
+        <div class="logo"><span></span>Northwind Reviews</div>
         <nav class="nav-links">
           <a href="#platform">Platform</a>
-          <a href="#reviews">Review Inbox</a>
-          <a href="#ai">AI Replies</a>
-          <a href="#analytics">Analytics</a>
+          <a href="#inbox">Review Inbox</a>
           <a href="#locations">Locations</a>
+          <a href="#insights">Insights</a>
+          <a href="#playbooks">Playbooks</a>
         </nav>
         <div class="nav-cta">
-          <a class="button ghost" href="#">Log in</a>
-          <a class="button primary" href="#">Start free</a>
+          <a class="button ghost" href="#">Sign in</a>
+          <a class="button primary" href="#">Book a demo</a>
         </div>
       </div>
     </header>
@@ -320,50 +346,53 @@
     <main>
       <section class="container hero">
         <div>
-          <span class="pill">All-in-one reputation platform</span>
-          <h1>Everything you need to replace BirdEye and grow local trust.</h1>
+          <span class="eyebrow">Review management for 12 locations</span>
+          <h1>Replace BirdEye with a modern review hub built for your stores.</h1>
           <p>
-            Review Manager combines review monitoring, AI-assisted replies, listings, and customer
-            messaging in a single dashboard. Centralize every location, automate routine responses,
-            and surface insights for your team without extra tools.
+            Northwind Reviews centralizes Google, Yelp, Facebook, and industry listings so your team
+            can monitor, respond, and recover reputation signals in one place. Keep every store on
+            brand with smart workflows, AI reply drafts, and live escalation rules.
           </p>
           <div class="nav-cta">
-            <a class="button primary" href="#">Launch your dashboard</a>
-            <a class="button ghost" href="#reviews">Preview the inbox</a>
+            <a class="button primary" href="#">Launch dashboard</a>
+            <a class="button ghost" href="#inbox">See the inbox</a>
           </div>
-          <div class="metrics">
-            <div class="metric">
-              <h3>4.8★</h3>
-              <p>Average rating across locations</p>
+          <div class="stat-grid">
+            <div class="stat">
+              <h3>4.7★</h3>
+              <p>Network rating in the last 30 days</p>
             </div>
-            <div class="metric">
-              <h3>65%</h3>
-              <p>Reviews answered in under 2 hours</p>
+            <div class="stat">
+              <h3>1h 05m</h3>
+              <p>Median response SLA</p>
             </div>
-            <div class="metric">
-              <h3>40+</h3>
-              <p>Sites monitored automatically</p>
+            <div class="stat">
+              <h3>91%</h3>
+              <p>Reviews replied with a playbook</p>
             </div>
           </div>
         </div>
         <div class="hero-card">
-          <h3>Live reputation snapshot</h3>
-          <p class="lead">See what your team will manage each morning.</p>
-          <div class="dashboard">
+          <div>
+            <span class="pill">Today’s priority</span>
+            <h3>12-store reputation snapshot</h3>
+            <p class="lead">All locations and channels, sorted by urgency.</p>
+          </div>
+          <div class="grid three">
             <div class="card">
-              <span class="pill">Inbox</span>
-              <h3>23 new reviews</h3>
-              <p>Across Google, Yelp, Facebook, and TripAdvisor.</p>
+              <span class="pill">Critical</span>
+              <h3>6 needs escalation</h3>
+              <p>Auto-routed to regional managers.</p>
             </div>
             <div class="card">
-              <span class="pill">Response SLA</span>
-              <h3>1h 12m</h3>
-              <p>Median response time this week.</p>
+              <span class="pill" style="background:#dcfce7;color:#166534;">AI Drafts</span>
+              <h3>18 ready to send</h3>
+              <p>Pending approvals for your brand voice.</p>
             </div>
             <div class="card">
-              <span class="pill">Listings</span>
-              <h3>98% accurate</h3>
-              <p>Track consistency across directories.</p>
+              <span class="pill" style="background:#fef3c7;color:#92400e;">Opportunities</span>
+              <h3>9 promoters to thank</h3>
+              <p>Turn praise into referrals fast.</p>
             </div>
           </div>
         </div>
@@ -371,130 +400,123 @@
 
       <section class="section" id="platform">
         <div class="container">
-          <h2>A single platform for every location</h2>
+          <h2>One console for every review touchpoint</h2>
           <p class="lead">
-            Replace disconnected tools with one workspace that keeps reviews, messaging, and listings
-            in sync. Tailor workflows for franchise, multi-location, or agency teams.
+            Keep operations, marketing, and store leaders aligned with real-time signals for every
+            location. Connect listings, ticketing, and SMS follow-ups without losing context.
           </p>
-          <div class="grid three">
+          <div class="grid three" style="margin-top: 24px;">
             <div class="card">
               <h3>Unified review inbox</h3>
-              <p>Monitor, tag, and route reviews from every channel to the right owner.</p>
+              <p>Aggregate every channel with tags, ownership, and escalation policies.</p>
             </div>
             <div class="card">
-              <h3>AI response drafting</h3>
-              <p>Generate on-brand replies instantly, with guardrails and approval flows.</p>
+              <h3>AI-guided replies</h3>
+              <p>Draft, edit, and approve responses with pre-built guardrails.</p>
             </div>
             <div class="card">
               <h3>Listings & knowledge</h3>
-              <p>Update hours, menus, photos, and services at scale with audit trails.</p>
+              <p>Sync hours, attributes, and photos across all directories.</p>
             </div>
             <div class="card">
-              <h3>Surveys & messaging</h3>
-              <p>Send SMS or email surveys, then recover detractors before they post.</p>
+              <h3>Guest recovery</h3>
+              <p>Trigger SMS or email follow-ups before negative posts go public.</p>
+            </div>
+            <div class="card">
+              <h3>Team playbooks</h3>
+              <p>Set SLAs, approvals, and escalation paths by region or store type.</p>
             </div>
             <div class="card">
               <h3>Competitive benchmarks</h3>
-              <p>Track share-of-voice, star ratings, and sentiment against nearby rivals.</p>
-            </div>
-            <div class="card">
-              <h3>Automations</h3>
-              <p>Trigger review requests, alerts, and escalations based on location rules.</p>
+              <p>Track share-of-voice and sentiment in every trade area.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section" id="reviews">
+      <section class="section" id="inbox">
         <div class="container">
-          <h2>Review inbox built for speed</h2>
-          <p class="lead">Filter by sentiment, location, topic, or status to keep teams aligned.</p>
-          <div class="reviews-board">
+          <h2>Review inbox tuned for multi-location teams</h2>
+          <p class="lead">Sort by sentiment, location, or issue type so the right team reacts fast.</p>
+          <div class="board">
             <div class="review">
               <div class="stars">★★★★★</div>
-              <p>
-                “Best service in town. The staff remembered my order and the pickup was ready fast.”
-              </p>
-              <div class="meta">Google · Downtown · 2h ago</div>
+              <p>“Clean store and the pickup was ready in minutes. Thanks for the friendly staff!”</p>
+              <div class="meta">Google · Harbor Point · 32m ago</div>
             </div>
             <div class="review">
-              <div class="stars">★★★☆☆</div>
-              <p>
-                “Great product, but I waited too long for a callback. Hoping the team follows up.”
-              </p>
-              <div class="meta">Facebook · Uptown · 4h ago</div>
+              <div class="stars">★★☆☆☆</div>
+              <p>“Waited too long for help. Hoping someone can follow up on my order issue.”</p>
+              <div class="meta">Yelp · Midtown · 1h ago</div>
             </div>
             <div class="review">
-              <div class="stars">★★★★★</div>
-              <p>
-                “Manager personally reached out after my visit. Love the attention to detail.”
-              </p>
-              <div class="meta">Yelp · Midtown · 1d ago</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="ai">
-        <div class="container">
-          <h2>AI reply assistant with full control</h2>
-          <p class="lead">
-            Draft responses in seconds and keep your brand voice consistent. Approve or edit
-            suggestions before posting.
-          </p>
-          <div class="grid three">
-            <div class="card">
-              <span class="pill">Suggested reply</span>
-              <h3>“Thanks for the glowing feedback!”</h3>
-              <p>Pulls sentiment, highlights keywords, and matches your tone automatically.</p>
-            </div>
-            <div class="card">
-              <span class="pill" style="background:#dcfce7;color:#15803d;">Policy checks</span>
-              <h3>Protected by guardrails</h3>
-              <p>Block sensitive language and require approvals for critical locations.</p>
-            </div>
-            <div class="card">
-              <span class="pill" style="background:#ffedd5;color:#b45309;">Smart routing</span>
-              <h3>Escalations in context</h3>
-              <p>Negative reviews are routed to managers with full customer history.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="analytics">
-        <div class="container">
-          <h2>Reporting that highlights what matters</h2>
-          <p class="lead">Track rating trends, sentiment shifts, and response SLAs in one view.</p>
-          <div class="grid three">
-            <div class="card">
-              <h3>Weekly rating trend</h3>
-              <div class="chart"></div>
-            </div>
-            <div class="card">
-              <h3>Response time</h3>
-              <div class="chart"></div>
-            </div>
-            <div class="card">
-              <h3>Sentiment mix</h3>
-              <div class="chart"></div>
+              <div class="stars">★★★★☆</div>
+              <p>“Great selection. The new seasonal display was impressive.”</p>
+              <div class="meta">Facebook · Lakeside · 3h ago</div>
             </div>
           </div>
         </div>
       </section>
 
       <section class="section" id="locations">
+        <div class="container">
+          <h2>Coverage for all 12 storefronts</h2>
+          <p class="lead">
+            Assign owners, set local templates, and roll up performance stats across every city.
+          </p>
+          <div class="locations">
+            <div class="location"><strong>Harbor Point</strong><br />4.8★ · 182 reviews</div>
+            <div class="location"><strong>Downtown</strong><br />4.6★ · 211 reviews</div>
+            <div class="location"><strong>Midtown</strong><br />4.4★ · 197 reviews</div>
+            <div class="location"><strong>Uptown</strong><br />4.7★ · 154 reviews</div>
+            <div class="location"><strong>Riverside</strong><br />4.5★ · 168 reviews</div>
+            <div class="location"><strong>Lakeside</strong><br />4.9★ · 141 reviews</div>
+            <div class="location"><strong>Westgate</strong><br />4.6★ · 133 reviews</div>
+            <div class="location"><strong>Hillcrest</strong><br />4.8★ · 119 reviews</div>
+            <div class="location"><strong>South Park</strong><br />4.3★ · 175 reviews</div>
+            <div class="location"><strong>East Market</strong><br />4.7★ · 162 reviews</div>
+            <div class="location"><strong>Northfield</strong><br />4.5★ · 148 reviews</div>
+            <div class="location"><strong>Maple Grove</strong><br />4.8★ · 136 reviews</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="insights">
+        <div class="container">
+          <h2>Insights your operators can act on</h2>
+          <p class="lead">
+            Turn review data into weekly scorecards, staffing priorities, and merchandising updates.
+          </p>
+          <div class="insights">
+            <div class="insight">
+              <h3>Top themes</h3>
+              <p>Staff friendliness, speedy pickup, and cleanliness are trending positive.</p>
+            </div>
+            <div class="insight">
+              <h3>At-risk locations</h3>
+              <p>Two locations need response SLA coverage on weekends.</p>
+            </div>
+            <div class="insight">
+              <h3>Response impact</h3>
+              <p>Stores that reply within 2 hours are lifting ratings by +0.3★.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="playbooks">
         <div class="container banner">
           <div>
-            <span class="badge">Multi-location ready</span>
-            <h2>Manage every storefront from one login</h2>
+            <span class="eyebrow" style="background: rgba(255,255,255,0.16); color: #fff;">Playbooks</span>
+            <h2>Automate what’s repeatable, personalize what matters.</h2>
           </div>
           <p>
-            Assign teams, configure location-specific templates, and keep your data clean with
-            real-time directory sync. Perfect for franchises, agencies, and enterprise brands.
+            Build response templates, set escalation rules, and schedule review campaigns that keep
+            every location compliant without sacrificing tone. Integrations with Slack, email, and
+            ticketing keep everyone aligned.
           </p>
           <div>
-            <a class="button primary" href="#">Book a demo</a>
+            <a class="button primary" href="#">Schedule onboarding</a>
           </div>
         </div>
       </section>
@@ -503,20 +525,20 @@
     <footer>
       <div class="container footer-grid">
         <div>
-          <div class="logo">Review Manager</div>
-          <p>Replace BirdEye with a flexible, modern reputation experience.</p>
+          <div class="logo"><span></span>Northwind Reviews</div>
+          <p>Review management for multi-location brands that want more than a star rating.</p>
         </div>
         <div>
           <h4>Platform</h4>
-          <p>Reviews · Messaging · Listings · Surveys</p>
+          <p>Inbox · Playbooks · Listings · Messaging</p>
         </div>
         <div>
-          <h4>Resources</h4>
-          <p>Support · Integrations · API Docs · Security</p>
+          <h4>Insights</h4>
+          <p>Scorecards · Competitive view · Sentiment</p>
         </div>
         <div>
           <h4>Contact</h4>
-          <p>hello@reviewmanager.app · (555) 123-4567</p>
+          <p>hello@northwindreviews.com · (555) 014-2400</p>
         </div>
       </div>
     </footer>

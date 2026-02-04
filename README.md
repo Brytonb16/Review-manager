@@ -7,6 +7,7 @@ This project provides a small Python service that automatically responds to Goog
 - Template-based responses by star rating.
 - Local SQLite state to avoid duplicate replies.
 - Dry-run mode for safe previews.
+- Optional web experience inspired by BirdEye for teams that prefer a dashboard.
 
 ## Prerequisites
 1. A Google Business Profile account with access to all locations.
@@ -46,6 +47,14 @@ Send replies:
 ```bash
 python -m app.main
 ```
+
+## Web dashboard
+If you want a BirdEye-style experience, start the web interface:
+```bash
+python -m app.web
+```
+
+Then open `http://localhost:8000` in your browser.
 
 ## Recommended workflow
 1. Run in dry-run first to confirm templates.

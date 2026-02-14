@@ -3,544 +3,468 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Northwind Reviews | Multi-Location Review Management</title>
+    <title>Northwind Reviews | Review Response Command Center</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
       :root {
-        color-scheme: light;
-        font-family: "Manrope", system-ui, sans-serif;
-        --ink: #0b1220;
-        --muted: #5b6472;
-        --accent: #2563eb;
-        --accent-dark: #1d4ed8;
-        --accent-soft: #e0e7ff;
-        --surface: #ffffff;
-        --surface-alt: #f8fafc;
-        --border: #e2e8f0;
-        --success: #10b981;
+        --bg: #f3f5fb;
+        --panel: #ffffff;
+        --muted: #5b6475;
+        --ink: #111827;
+        --line: #dbe2ef;
+        --primary: #2563eb;
+        --primary-dark: #1d4ed8;
+        --danger: #ef4444;
         --warning: #f59e0b;
-        --shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
+        --ok: #10b981;
       }
 
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
+      * { box-sizing: border-box; }
       body {
-        background: #f4f6fb;
+        margin: 0;
+        font-family: "Inter", system-ui, sans-serif;
+        background: var(--bg);
         color: var(--ink);
       }
 
-      a {
-        text-decoration: none;
-        color: inherit;
-      }
-
-      img {
-        max-width: 100%;
-        display: block;
-      }
-
-      header {
-        position: sticky;
-        top: 0;
-        backdrop-filter: blur(14px);
-        background: rgba(244, 246, 251, 0.9);
-        border-bottom: 1px solid var(--border);
-        z-index: 20;
-      }
-
-      .container {
-        width: min(1200px, 92vw);
-        margin: 0 auto;
-      }
-
-      .nav {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 20px 0;
-        gap: 24px;
-      }
-
-      .logo {
-        font-weight: 800;
-        font-size: 1.1rem;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .logo span {
-        display: inline-flex;
-        height: 34px;
-        width: 34px;
-        border-radius: 12px;
-        background: linear-gradient(135deg, #2563eb, #60a5fa);
-      }
-
-      .nav-links {
-        display: flex;
-        gap: 22px;
-        font-weight: 600;
-        color: var(--muted);
-      }
-
-      .nav-cta {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .button {
-        border-radius: 999px;
-        padding: 12px 20px;
-        font-weight: 700;
-        font-size: 0.9rem;
-        border: 1px solid transparent;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-      }
-
-      .button.primary {
-        background: var(--accent);
-        color: #fff;
-      }
-
-      .button.primary:hover {
-        background: var(--accent-dark);
-      }
-
-      .button.ghost {
-        border-color: var(--border);
-        background: var(--surface);
-        color: var(--ink);
-      }
-
-      .hero {
+      .layout {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 36px;
-        align-items: center;
-        padding: 70px 0 40px;
+        grid-template-columns: 280px 1fr;
+        min-height: 100vh;
       }
 
-      .hero h1 {
-        font-size: clamp(2.6rem, 3vw, 3.5rem);
-        line-height: 1.05;
-        margin-bottom: 16px;
+      aside {
+        background: #0f172a;
+        color: #dbeafe;
+        padding: 22px 18px;
       }
 
-      .hero p {
-        color: var(--muted);
-        line-height: 1.7;
+      .brand {
+        font-weight: 800;
+        font-size: 1.05rem;
+        margin-bottom: 22px;
+      }
+
+      .badge {
+        display: inline-block;
+        background: rgba(37, 99, 235, 0.22);
+        color: #bfdbfe;
+        border: 1px solid rgba(191, 219, 254, 0.28);
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 0.76rem;
         margin-bottom: 20px;
       }
 
-      .eyebrow {
-        display: inline-flex;
+      .nav-btn {
+        width: 100%;
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        background: transparent;
+        color: #e2e8f0;
+        border-radius: 10px;
+        padding: 10px 12px;
+        text-align: left;
+        margin: 8px 0;
+        cursor: pointer;
+      }
+
+      .nav-btn.active, .nav-btn:hover {
+        background: rgba(37, 99, 235, 0.25);
+        border-color: rgba(37, 99, 235, 0.8);
+      }
+
+      main {
+        padding: 26px;
+      }
+
+      .header {
+        display: flex;
         align-items: center;
-        gap: 8px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        background: var(--accent-soft);
-        color: var(--accent-dark);
-        padding: 6px 12px;
-        border-radius: 999px;
-        margin-bottom: 16px;
-      }
-
-      .hero-card {
-        background: var(--surface);
-        border-radius: 28px;
-        padding: 28px;
-        box-shadow: var(--shadow);
-        border: 1px solid var(--border);
-        display: grid;
-        gap: 18px;
-      }
-
-      .stat-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        justify-content: space-between;
         gap: 12px;
       }
 
-      .stat {
-        background: var(--surface-alt);
-        border-radius: 16px;
-        padding: 14px 16px;
-      }
+      h1 { font-size: clamp(1.5rem, 2.3vw, 2.2rem); margin: 0; }
+      .sub { color: var(--muted); margin-top: 6px; }
 
-      .stat h3 {
-        font-size: 1.3rem;
-        margin-bottom: 4px;
+      .btn {
+        border: 1px solid transparent;
+        background: var(--primary);
+        color: white;
+        border-radius: 10px;
+        padding: 10px 14px;
+        font-weight: 600;
+        cursor: pointer;
       }
+      .btn:hover { background: var(--primary-dark); }
 
-      .section {
-        padding: 50px 0;
-      }
-
-      .section h2 {
-        font-size: 2rem;
-        margin-bottom: 12px;
-      }
-
-      .section p.lead {
-        max-width: 680px;
-        color: var(--muted);
-        line-height: 1.7;
-      }
-
-      .grid {
+      .stats {
+        margin-top: 22px;
         display: grid;
-        gap: 18px;
-      }
-
-      .grid.three {
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        gap: 12px;
       }
 
       .card {
-        background: var(--surface);
-        border-radius: 20px;
-        padding: 20px;
-        border: 1px solid var(--border);
-        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.04);
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 14px;
       }
 
-      .card h3 {
-        margin-bottom: 8px;
-        font-size: 1.1rem;
+      .stat-number { font-size: 1.7rem; font-weight: 800; margin: 8px 0; }
+      .muted { color: var(--muted); font-size: 0.92rem; }
+
+      .workspace {
+        margin-top: 18px;
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 14px;
       }
 
-      .pill {
-        display: inline-flex;
-        align-items: center;
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
         gap: 8px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        padding: 5px 10px;
+        margin-bottom: 12px;
+      }
+
+      select, input, textarea {
+        border: 1px solid var(--line);
+        background: white;
+        border-radius: 8px;
+        padding: 9px 10px;
+        font: inherit;
+      }
+
+      .review-list {
+        display: grid;
+        gap: 10px;
+        max-height: 560px;
+        overflow: auto;
+      }
+
+      .review-item {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 12px;
+        cursor: pointer;
+      }
+
+      .review-item.active {
+        border-color: var(--primary);
+        box-shadow: inset 0 0 0 1px var(--primary);
+      }
+
+      .stars { color: #f59e0b; font-size: 0.95rem; }
+      .meta { color: var(--muted); font-size: 0.8rem; margin-top: 5px; }
+
+      .priority {
+        display: inline-block;
         border-radius: 999px;
-        background: #eef2ff;
-        color: #4338ca;
-        margin-bottom: 10px;
+        padding: 3px 8px;
+        font-size: 0.73rem;
+        font-weight: 700;
+        margin-top: 6px;
+      }
+      .priority.high { background: #fee2e2; color: #b91c1c; }
+      .priority.medium { background: #fef3c7; color: #b45309; }
+      .priority.low { background: #dcfce7; color: #15803d; }
+
+      .detail-header { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+      textarea { width: 100%; min-height: 140px; resize: vertical; }
+      .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+      .btn.secondary { background: white; color: var(--ink); border-color: var(--line); }
+      .btn.secondary:hover { background: #f8fafc; }
+      .btn.warn { background: var(--warning); }
+      .btn.danger { background: var(--danger); }
+      .status {
+        margin-top: 10px;
+        padding: 9px 10px;
+        border-radius: 8px;
+        background: #ecfeff;
+        color: #155e75;
+        border: 1px solid #a5f3fc;
+        display: none;
       }
 
-      .board {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 16px;
-        margin-top: 20px;
-      }
-
-      .review {
-        border: 1px solid var(--border);
-        border-radius: 18px;
-        padding: 18px;
-        background: var(--surface);
-      }
-
-      .review .stars {
-        color: #fbbf24;
-        margin-bottom: 8px;
-      }
-
-      .review .meta {
-        font-size: 0.8rem;
-        color: var(--muted);
-        margin-top: 12px;
-      }
-
-      .locations {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 12px;
-        margin-top: 24px;
-      }
-
-      .location {
-        padding: 16px;
-        border-radius: 16px;
-        background: var(--surface-alt);
-        border: 1px solid var(--border);
-      }
-
-      .insights {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 16px;
-        margin-top: 24px;
-      }
-
-      .insight {
-        padding: 20px;
-        border-radius: 18px;
-        background: linear-gradient(120deg, #eff6ff, #eef2ff);
-        border: 1px solid var(--border);
-      }
-
-      .banner {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 20px;
-        align-items: center;
-        background: #0f172a;
-        color: #fff;
-        padding: 32px;
-        border-radius: 26px;
-      }
-
-      .banner p {
-        color: #cbd5f5;
-        line-height: 1.7;
-      }
-
-      footer {
-        padding: 50px 0 70px;
-        color: var(--muted);
-      }
-
-      .footer-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 18px;
-      }
-
-      @media (max-width: 860px) {
-        .nav-links {
-          display: none;
-        }
+      @media (max-width: 980px) {
+        .layout { grid-template-columns: 1fr; }
+        aside { padding: 14px; }
+        .workspace { grid-template-columns: 1fr; }
       }
     </style>
   </head>
   <body>
-    <header>
-      <div class="container nav">
-        <div class="logo"><span></span>Northwind Reviews</div>
-        <nav class="nav-links">
-          <a href="#platform">Platform</a>
-          <a href="#inbox">Review Inbox</a>
-          <a href="#locations">Locations</a>
-          <a href="#insights">Insights</a>
-          <a href="#playbooks">Playbooks</a>
-        </nav>
-        <div class="nav-cta">
-          <a class="button ghost" href="#">Sign in</a>
-          <a class="button primary" href="#">Book a demo</a>
-        </div>
-      </div>
-    </header>
+    <div class="layout">
+      <aside>
+        <div class="brand">Northwind Reviews</div>
+        <div class="badge">BirdEye-style review operations</div>
+        <button class="nav-btn active">Review Inbox</button>
+        <button class="nav-btn">Auto Reply Playbooks</button>
+        <button class="nav-btn">Locations</button>
+        <button class="nav-btn">Analytics</button>
+        <button class="nav-btn">Team SLA</button>
+      </aside>
 
-    <main>
-      <section class="container hero">
-        <div>
-          <span class="eyebrow">Review management for 12 locations</span>
-          <h1>Replace BirdEye with a modern review hub built for your stores.</h1>
-          <p>
-            Northwind Reviews centralizes Google, Yelp, Facebook, and industry listings so your team
-            can monitor, respond, and recover reputation signals in one place. Keep every store on
-            brand with smart workflows, AI reply drafts, and live escalation rules.
-          </p>
-          <div class="nav-cta">
-            <a class="button primary" href="#">Launch dashboard</a>
-            <a class="button ghost" href="#inbox">See the inbox</a>
-          </div>
-          <div class="stat-grid">
-            <div class="stat">
-              <h3>4.7★</h3>
-              <p>Network rating in the last 30 days</p>
-            </div>
-            <div class="stat">
-              <h3>1h 05m</h3>
-              <p>Median response SLA</p>
-            </div>
-            <div class="stat">
-              <h3>91%</h3>
-              <p>Reviews replied with a playbook</p>
-            </div>
-          </div>
-        </div>
-        <div class="hero-card">
+      <main>
+        <div class="header">
           <div>
-            <span class="pill">Today’s priority</span>
-            <h3>12-store reputation snapshot</h3>
-            <p class="lead">All locations and channels, sorted by urgency.</p>
+            <h1>Automatic Review Response & Management</h1>
+            <p class="sub">Prioritize reviews, draft responses, assign owners, and track status in one dashboard.</p>
           </div>
-          <div class="grid three">
-            <div class="card">
-              <span class="pill">Critical</span>
-              <h3>6 needs escalation</h3>
-              <p>Auto-routed to regional managers.</p>
-            </div>
-            <div class="card">
-              <span class="pill" style="background:#dcfce7;color:#166534;">AI Drafts</span>
-              <h3>18 ready to send</h3>
-              <p>Pending approvals for your brand voice.</p>
-            </div>
-            <div class="card">
-              <span class="pill" style="background:#fef3c7;color:#92400e;">Opportunities</span>
-              <h3>9 promoters to thank</h3>
-              <p>Turn praise into referrals fast.</p>
-            </div>
-          </div>
+          <button class="btn" id="bulkReply">Run Auto-Reply on Filter</button>
         </div>
-      </section>
 
-      <section class="section" id="platform">
-        <div class="container">
-          <h2>One console for every review touchpoint</h2>
-          <p class="lead">
-            Keep operations, marketing, and store leaders aligned with real-time signals for every
-            location. Connect listings, ticketing, and SMS follow-ups without losing context.
-          </p>
-          <div class="grid three" style="margin-top: 24px;">
-            <div class="card">
-              <h3>Unified review inbox</h3>
-              <p>Aggregate every channel with tags, ownership, and escalation policies.</p>
-            </div>
-            <div class="card">
-              <h3>AI-guided replies</h3>
-              <p>Draft, edit, and approve responses with pre-built guardrails.</p>
-            </div>
-            <div class="card">
-              <h3>Listings & knowledge</h3>
-              <p>Sync hours, attributes, and photos across all directories.</p>
-            </div>
-            <div class="card">
-              <h3>Guest recovery</h3>
-              <p>Trigger SMS or email follow-ups before negative posts go public.</p>
-            </div>
-            <div class="card">
-              <h3>Team playbooks</h3>
-              <p>Set SLAs, approvals, and escalation paths by region or store type.</p>
-            </div>
-            <div class="card">
-              <h3>Competitive benchmarks</h3>
-              <p>Track share-of-voice and sentiment in every trade area.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+        <section class="stats">
+          <div class="card"><div class="muted">Pending Reviews</div><div class="stat-number" id="statPending">0</div><div class="muted">Need response now</div></div>
+          <div class="card"><div class="muted">Needs Escalation</div><div class="stat-number" id="statEscalated">0</div><div class="muted">1-2 star mentions</div></div>
+          <div class="card"><div class="muted">Avg Response Time</div><div class="stat-number">1h 14m</div><div class="muted">Across 12 locations</div></div>
+          <div class="card"><div class="muted">Auto-Draft Ready</div><div class="stat-number" id="statDrafts">0</div><div class="muted">One-click send queue</div></div>
+        </section>
 
-      <section class="section" id="inbox">
-        <div class="container">
-          <h2>Review inbox tuned for multi-location teams</h2>
-          <p class="lead">Sort by sentiment, location, or issue type so the right team reacts fast.</p>
-          <div class="board">
-            <div class="review">
-              <div class="stars">★★★★★</div>
-              <p>“Clean store and the pickup was ready in minutes. Thanks for the friendly staff!”</p>
-              <div class="meta">Google · Harbor Point · 32m ago</div>
+        <section class="workspace">
+          <div class="card">
+            <div class="filters">
+              <select id="locationFilter"><option value="all">All locations</option></select>
+              <select id="ratingFilter">
+                <option value="all">All ratings</option>
+                <option value="5">5 stars</option>
+                <option value="4">4 stars</option>
+                <option value="3">3 stars</option>
+                <option value="2">2 stars</option>
+                <option value="1">1 star</option>
+              </select>
+              <select id="statusFilter">
+                <option value="all">All statuses</option>
+                <option value="pending">Pending</option>
+                <option value="drafted">Drafted</option>
+                <option value="sent">Sent</option>
+                <option value="escalated">Escalated</option>
+              </select>
+              <input id="searchFilter" placeholder="Search customer text..." />
             </div>
-            <div class="review">
-              <div class="stars">★★☆☆☆</div>
-              <p>“Waited too long for help. Hoping someone can follow up on my order issue.”</p>
-              <div class="meta">Yelp · Midtown · 1h ago</div>
-            </div>
-            <div class="review">
-              <div class="stars">★★★★☆</div>
-              <p>“Great selection. The new seasonal display was impressive.”</p>
-              <div class="meta">Facebook · Lakeside · 3h ago</div>
-            </div>
+            <div class="review-list" id="reviewList"></div>
           </div>
-        </div>
-      </section>
 
-      <section class="section" id="locations">
-        <div class="container">
-          <h2>Coverage for all 12 storefronts</h2>
-          <p class="lead">
-            Assign owners, set local templates, and roll up performance stats across every city.
-          </p>
-          <div class="locations">
-            <div class="location"><strong>Harbor Point</strong><br />4.8★ · 182 reviews</div>
-            <div class="location"><strong>Downtown</strong><br />4.6★ · 211 reviews</div>
-            <div class="location"><strong>Midtown</strong><br />4.4★ · 197 reviews</div>
-            <div class="location"><strong>Uptown</strong><br />4.7★ · 154 reviews</div>
-            <div class="location"><strong>Riverside</strong><br />4.5★ · 168 reviews</div>
-            <div class="location"><strong>Lakeside</strong><br />4.9★ · 141 reviews</div>
-            <div class="location"><strong>Westgate</strong><br />4.6★ · 133 reviews</div>
-            <div class="location"><strong>Hillcrest</strong><br />4.8★ · 119 reviews</div>
-            <div class="location"><strong>South Park</strong><br />4.3★ · 175 reviews</div>
-            <div class="location"><strong>East Market</strong><br />4.7★ · 162 reviews</div>
-            <div class="location"><strong>Northfield</strong><br />4.5★ · 148 reviews</div>
-            <div class="location"><strong>Maple Grove</strong><br />4.8★ · 136 reviews</div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="insights">
-        <div class="container">
-          <h2>Insights your operators can act on</h2>
-          <p class="lead">
-            Turn review data into weekly scorecards, staffing priorities, and merchandising updates.
-          </p>
-          <div class="insights">
-            <div class="insight">
-              <h3>Top themes</h3>
-              <p>Staff friendliness, speedy pickup, and cleanliness are trending positive.</p>
+          <div class="card">
+            <div class="detail-header">
+              <h3 id="detailName">Select a review</h3>
+              <span class="priority" id="detailPriority">--</span>
             </div>
-            <div class="insight">
-              <h3>At-risk locations</h3>
-              <p>Two locations need response SLA coverage on weekends.</p>
+            <p class="muted" id="detailMeta">Choose a review to see the details and send a response.</p>
+            <p id="detailText"></p>
+            <label for="replyBox" class="muted" style="display:block; margin: 10px 0 6px;">Response Draft</label>
+            <textarea id="replyBox" placeholder="AI response draft will appear here..."></textarea>
+            <div class="actions">
+              <button class="btn" id="generateBtn">Generate AI Draft</button>
+              <button class="btn secondary" id="saveBtn">Save Draft</button>
+              <button class="btn" id="sendBtn">Send Response</button>
+              <button class="btn warn" id="escalateBtn">Escalate</button>
+              <button class="btn danger" id="clearBtn">Clear</button>
             </div>
-            <div class="insight">
-              <h3>Response impact</h3>
-              <p>Stores that reply within 2 hours are lifting ratings by +0.3★.</p>
-            </div>
+            <div id="statusMessage" class="status"></div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
+    </div>
 
-      <section class="section" id="playbooks">
-        <div class="container banner">
-          <div>
-            <span class="eyebrow" style="background: rgba(255,255,255,0.16); color: #fff;">Playbooks</span>
-            <h2>Automate what’s repeatable, personalize what matters.</h2>
-          </div>
-          <p>
-            Build response templates, set escalation rules, and schedule review campaigns that keep
-            every location compliant without sacrificing tone. Integrations with Slack, email, and
-            ticketing keep everyone aligned.
-          </p>
-          <div>
-            <a class="button primary" href="#">Schedule onboarding</a>
-          </div>
-        </div>
-      </section>
-    </main>
+    <script>
+      const reviews = [
+        { id: 1, name: "Taylor B.", location: "Harbor Point", rating: 5, source: "Google", text: "Amazing service and super quick pickup.", age: "12m", status: "pending", priority: "low" },
+        { id: 2, name: "Sam R.", location: "Midtown", rating: 2, source: "Yelp", text: "I waited 25 mins and no one could help me at checkout.", age: "24m", status: "pending", priority: "high" },
+        { id: 3, name: "Jordan K.", location: "Lakeside", rating: 4, source: "Facebook", text: "Great staff. Wish there were more size options.", age: "1h", status: "drafted", priority: "medium" },
+        { id: 4, name: "Casey M.", location: "Downtown", rating: 1, source: "Google", text: "Wrong order twice and manager never called back.", age: "1h", status: "escalated", priority: "high" },
+        { id: 5, name: "Alex P.", location: "Uptown", rating: 5, source: "Google", text: "Clean store, friendly team, checkout was seamless.", age: "2h", status: "pending", priority: "low" },
+        { id: 6, name: "Morgan J.", location: "Riverside", rating: 3, source: "Yelp", text: "Decent experience but pickup instructions were confusing.", age: "3h", status: "pending", priority: "medium" }
+      ];
 
-    <footer>
-      <div class="container footer-grid">
-        <div>
-          <div class="logo"><span></span>Northwind Reviews</div>
-          <p>Review management for multi-location brands that want more than a star rating.</p>
-        </div>
-        <div>
-          <h4>Platform</h4>
-          <p>Inbox · Playbooks · Listings · Messaging</p>
-        </div>
-        <div>
-          <h4>Insights</h4>
-          <p>Scorecards · Competitive view · Sentiment</p>
-        </div>
-        <div>
-          <h4>Contact</h4>
-          <p>hello@northwindreviews.com · (555) 014-2400</p>
-        </div>
-      </div>
-    </footer>
+      const templates = {
+        5: "Thank you so much for the 5-star feedback, {{name}}! We shared your note with the {{location}} team and hope to see you again soon.",
+        4: "Thanks for your review, {{name}}! We appreciate your feedback and will keep improving at {{location}}.",
+        3: "Thanks for the honest feedback, {{name}}. We are reviewing your comments with the {{location}} team and will work on a better experience.",
+        2: "Hi {{name}}, we are sorry your visit at {{location}} missed the mark. Please message us directly so we can make this right.",
+        1: "{{name}}, we sincerely apologize for your experience at {{location}}. Our manager has been alerted and will follow up immediately."
+      };
+
+      const state = { selectedId: null };
+      const reviewList = document.getElementById("reviewList");
+      const locationFilter = document.getElementById("locationFilter");
+      const ratingFilter = document.getElementById("ratingFilter");
+      const statusFilter = document.getElementById("statusFilter");
+      const searchFilter = document.getElementById("searchFilter");
+      const replyBox = document.getElementById("replyBox");
+      const statusMessage = document.getElementById("statusMessage");
+
+      function flash(msg) {
+        statusMessage.textContent = msg;
+        statusMessage.style.display = "block";
+        setTimeout(() => (statusMessage.style.display = "none"), 2300);
+      }
+
+      function priorityClass(priority) {
+        return priority === "high" ? "high" : priority === "medium" ? "medium" : "low";
+      }
+
+      function stars(rating) {
+        return "★".repeat(rating) + "☆".repeat(5 - rating);
+      }
+
+      function getFilteredReviews() {
+        return reviews.filter((review) => {
+          const locationOK = locationFilter.value === "all" || review.location === locationFilter.value;
+          const ratingOK = ratingFilter.value === "all" || String(review.rating) === ratingFilter.value;
+          const statusOK = statusFilter.value === "all" || review.status === statusFilter.value;
+          const searchOK = review.text.toLowerCase().includes(searchFilter.value.toLowerCase()) || review.name.toLowerCase().includes(searchFilter.value.toLowerCase());
+          return locationOK && ratingOK && statusOK && searchOK;
+        });
+      }
+
+      function renderStats() {
+        const pending = reviews.filter((r) => r.status === "pending").length;
+        const escalated = reviews.filter((r) => r.status === "escalated" || r.rating <= 2).length;
+        const drafts = reviews.filter((r) => r.status === "drafted").length;
+        document.getElementById("statPending").textContent = pending;
+        document.getElementById("statEscalated").textContent = escalated;
+        document.getElementById("statDrafts").textContent = drafts;
+      }
+
+      function renderList() {
+        const filtered = getFilteredReviews();
+        reviewList.innerHTML = filtered.map((review) => `
+          <div class="review-item ${state.selectedId === review.id ? "active" : ""}" data-id="${review.id}">
+            <strong>${review.name}</strong>
+            <div class="stars">${stars(review.rating)}</div>
+            <div>${review.text}</div>
+            <div class="meta">${review.source} · ${review.location} · ${review.age} ago · ${review.status}</div>
+            <span class="priority ${priorityClass(review.priority)}">${review.priority.toUpperCase()}</span>
+          </div>
+        `).join("") || `<div class="muted">No reviews match your filters.</div>`;
+
+        reviewList.querySelectorAll(".review-item").forEach((item) => {
+          item.addEventListener("click", () => {
+            state.selectedId = Number(item.dataset.id);
+            renderList();
+            renderDetail();
+          });
+        });
+      }
+
+      function renderDetail() {
+        const review = reviews.find((r) => r.id === state.selectedId);
+        const priority = document.getElementById("detailPriority");
+
+        if (!review) {
+          document.getElementById("detailName").textContent = "Select a review";
+          document.getElementById("detailMeta").textContent = "Choose a review to see the details and send a response.";
+          document.getElementById("detailText").textContent = "";
+          priority.textContent = "--";
+          priority.className = "priority";
+          replyBox.value = "";
+          return;
+        }
+
+        document.getElementById("detailName").textContent = `${review.name} · ${stars(review.rating)}`;
+        document.getElementById("detailMeta").textContent = `${review.source} · ${review.location} · ${review.age} ago · Status: ${review.status}`;
+        document.getElementById("detailText").textContent = review.text;
+        priority.textContent = review.priority.toUpperCase();
+        priority.className = `priority ${priorityClass(review.priority)}`;
+        replyBox.value = review.reply || "";
+      }
+
+      function generateDraft() {
+        const review = reviews.find((r) => r.id === state.selectedId);
+        if (!review) return flash("Pick a review first.");
+        review.reply = templates[review.rating].replace("{{name}}", review.name).replace("{{location}}", review.location);
+        review.status = "drafted";
+        renderStats();
+        renderList();
+        renderDetail();
+        flash("AI draft generated.");
+      }
+
+      function saveDraft() {
+        const review = reviews.find((r) => r.id === state.selectedId);
+        if (!review) return flash("Pick a review first.");
+        review.reply = replyBox.value.trim();
+        review.status = "drafted";
+        renderStats();
+        renderList();
+        renderDetail();
+        flash("Draft saved.");
+      }
+
+      function sendResponse() {
+        const review = reviews.find((r) => r.id === state.selectedId);
+        if (!review) return flash("Pick a review first.");
+        if (!replyBox.value.trim()) return flash("Generate or write a response first.");
+        review.reply = replyBox.value.trim();
+        review.status = "sent";
+        renderStats();
+        renderList();
+        renderDetail();
+        flash("Response sent successfully.");
+      }
+
+      function escalateReview() {
+        const review = reviews.find((r) => r.id === state.selectedId);
+        if (!review) return flash("Pick a review first.");
+        review.status = "escalated";
+        review.priority = "high";
+        renderStats();
+        renderList();
+        renderDetail();
+        flash("Review escalated to manager queue.");
+      }
+
+      function clearResponse() {
+        const review = reviews.find((r) => r.id === state.selectedId);
+        if (!review) return flash("Pick a review first.");
+        review.reply = "";
+        review.status = "pending";
+        renderStats();
+        renderList();
+        renderDetail();
+        flash("Draft cleared.");
+      }
+
+      function bulkAutoReply() {
+        const filtered = getFilteredReviews();
+        let changed = 0;
+        filtered.forEach((review) => {
+          if (review.status === "pending" && review.rating >= 4) {
+            review.reply = templates[review.rating].replace("{{name}}", review.name).replace("{{location}}", review.location);
+            review.status = "drafted";
+            changed += 1;
+          }
+        });
+        renderStats();
+        renderList();
+        renderDetail();
+        flash(`Auto-reply created ${changed} draft(s).`);
+      }
+
+      const locations = [...new Set(reviews.map((r) => r.location))];
+      locations.forEach((loc) => {
+        const option = document.createElement("option");
+        option.value = loc;
+        option.textContent = loc;
+        locationFilter.appendChild(option);
+      });
+
+      [locationFilter, ratingFilter, statusFilter, searchFilter].forEach((el) => el.addEventListener("input", renderList));
+      document.getElementById("generateBtn").addEventListener("click", generateDraft);
+      document.getElementById("saveBtn").addEventListener("click", saveDraft);
+      document.getElementById("sendBtn").addEventListener("click", sendResponse);
+      document.getElementById("escalateBtn").addEventListener("click", escalateReview);
+      document.getElementById("clearBtn").addEventListener("click", clearResponse);
+      document.getElementById("bulkReply").addEventListener("click", bulkAutoReply);
+
+      renderStats();
+      renderList();
+      renderDetail();
+    </script>
   </body>
 </html>
